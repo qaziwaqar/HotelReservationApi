@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class GuestService {
@@ -27,5 +28,13 @@ public class GuestService {
         List<Guest> guestList = new ArrayList<>();
         this.guestRepository.findAll().forEach(guestList::add);
         return guestList;
+    }
+
+    public Guest addGuest(Guest guest) {
+        return this.guestRepository.save(guest);
+    }
+
+    public Optional<Guest> findGuestById(Long id) {
+        return this.guestRepository.findById(id);
     }
 }

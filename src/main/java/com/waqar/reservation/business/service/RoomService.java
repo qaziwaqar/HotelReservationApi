@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -36,5 +37,13 @@ public class RoomService {
 
         List<Room> roomResultList = roomList.stream().filter(room -> !reservedRoomIdSet.contains(room.getId())).collect(Collectors.toList());
         return roomResultList;
+    }
+
+    public Room addRoom(Room room) {
+        return this.roomRepository.save(room);
+    }
+
+    public Optional<Room> getRoomById(Long id) {
+        return this.roomRepository.findById(id);
     }
 }
