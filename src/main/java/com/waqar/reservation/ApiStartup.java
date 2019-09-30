@@ -34,9 +34,6 @@ public class ApiStartup implements CommandLineRunner {
 		this.reservationRepository = reservationRepository;
 	}
 
-	@Autowired
-
-
 	public static void main(String[] args) {
 		SpringApplication.run(ApiStartup.class, args);
 	}
