@@ -33,7 +33,7 @@ public class RoomController {
     @GetMapping("/{id}")
     public ResponseEntity getRoomById(@PathVariable Long id) {
         Optional<Room> optionalRoom = this.roomService.getRoomById(id);
-        if(optionalRoom.isPresent()) {
+        if (optionalRoom.isPresent()) {
             return ResponseEntity.ok(optionalRoom.get());
         } else {
             return ResponseEntity.badRequest().body("Room with ID " + id + ", is not found");

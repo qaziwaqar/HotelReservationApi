@@ -54,7 +54,7 @@ public class ReservationService {
     public Optional<ReservationDTO> getReservedRoomsById(Long id) {
         ReservationDTO reservationDTO = null;
         Optional<Reservation> reservationOptional = this.reservationRepository.findById(id);
-        if(reservationOptional.isPresent()) {
+        if (reservationOptional.isPresent()) {
             Reservation reservation = reservationOptional.get();
             Room room = this.roomRepository.findById(reservation.getRoomId()).get();
             Guest guest = this.guestRepository.findById(reservation.getGuestId()).get();
@@ -75,13 +75,13 @@ public class ReservationService {
             reservationDTO.setCountry(guest.getCountry());
 
             return Optional.of(reservationDTO);
-        }else {
+        } else {
             return Optional.ofNullable(reservationDTO);
         }
     }
 
     private Date getDateFromDateString(String date) {
-        if(date == null) {
+        if (date == null) {
             return new Date();
         }
         try {

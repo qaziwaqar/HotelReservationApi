@@ -21,56 +21,56 @@ import java.util.logging.Logger;
 @SpringBootApplication
 public class ApiStartup implements CommandLineRunner {
 
-	private static final Logger LOGGER = Logger.getLogger(ApiStartup.class.getSimpleName());
-	private final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
-	private RoomRepository roomRepository;
-	private GuestRepository guestRepository;
-	private ReservationRepository reservationRepository;
+    private static final Logger LOGGER = Logger.getLogger(ApiStartup.class.getSimpleName());
+    private final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+    private RoomRepository roomRepository;
+    private GuestRepository guestRepository;
+    private ReservationRepository reservationRepository;
 
-	@Autowired
-	public ApiStartup(RoomRepository roomRepository, GuestRepository guestRepository, ReservationRepository reservationRepository) {
-		this.roomRepository = roomRepository;
-		this.guestRepository = guestRepository;
-		this.reservationRepository = reservationRepository;
-	}
+    @Autowired
+    public ApiStartup(RoomRepository roomRepository, GuestRepository guestRepository, ReservationRepository reservationRepository) {
+        this.roomRepository = roomRepository;
+        this.guestRepository = guestRepository;
+        this.reservationRepository = reservationRepository;
+    }
 
-	public static void main(String[] args) {
-		SpringApplication.run(ApiStartup.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(ApiStartup.class, args);
+    }
 
-	@Override
-	public void run(String... args) throws Exception {
-		LOGGER.info("Application startup with option names: " + Arrays.toString(args));
+    @Override
+    public void run(String... args) throws Exception {
+        LOGGER.info("Application startup with option names: " + Arrays.toString(args));
 
-		LOGGER.info("Loading some dummy data ");
-		List<Room> roomList = new ArrayList<>();
-		for (int i = 1; i <= 10; i++) {
-			Room room = new Room();
-			room.setNumber("AB"+ i);
-			int randomBeds = ((int)Math.random()*5)+5;
-			room.setTotalBeds(randomBeds);
-			roomList.add( this.roomRepository.save(room) );
-		}
+        LOGGER.info("Loading some dummy data ");
+        List<Room> roomList = new ArrayList<>();
+        for (int i = 1; i <= 10; i++) {
+            Room room = new Room();
+            room.setNumber("AB" + i);
+            int randomBeds = ((int) Math.random() * 5) + 5;
+            room.setTotalBeds(randomBeds);
+            roomList.add(this.roomRepository.save(room));
+        }
 
-		List<Guest> guestList = new ArrayList<>();
-		for (int i = 1; i <= 4; i++) {
-			Guest guest = new Guest();
-			int randomAge = ((int)Math.random()*40)+40;
-			guest.setFirstName("Johny " + i);
-			guest.setLastName("Test " + i);
-			guest.setEmail("johnytest"+i+"@gmail.com");
-			guest.setAge(randomAge);
-			guestList.add( this.guestRepository.save(guest) );
-		}
+        List<Guest> guestList = new ArrayList<>();
+        for (int i = 1; i <= 4; i++) {
+            Guest guest = new Guest();
+            int randomAge = ((int) Math.random() * 40) + 40;
+            guest.setFirstName("Johny " + i);
+            guest.setLastName("Test " + i);
+            guest.setEmail("johnytest" + i + "@gmail.com");
+            guest.setAge(randomAge);
+            guestList.add(this.guestRepository.save(guest));
+        }
 
-		for (int i = 0; i < guestList.size(); i++) {
-			Reservation reservation = new Reservation();
-			reservation.setGuestId(guestList.get(i).getId());
-			reservation.setRoomId(roomList.get(i).getId());
-			reservation.setReservationDate(DATE_FORMAT.parse("2019-07-0"+(i+1)));
-			this.reservationRepository.save(reservation);
-		}
+        for (int i = 0; i < guestList.size(); i++) {
+            Reservation reservation = new Reservation();
+            reservation.setGuestId(guestList.get(i).getId());
+            reservation.setRoomId(roomList.get(i).getId());
+            reservation.setReservationDate(DATE_FORMAT.parse("2019-07-0" + (i + 1)));
+            this.reservationRepository.save(reservation);
+        }
 
-		LOGGER.info("Loading dummy data ended");
-	}
+        LOGGER.info("Loading dummy data ended");
+    }
 }

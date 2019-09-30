@@ -33,10 +33,10 @@ public class GuestController {
     @GetMapping("/{id}")
     public ResponseEntity getGuestById(@PathVariable Long id) {
         Optional<Guest> optionalGuest = this.guestService.findGuestById(id);
-        if(optionalGuest.isPresent()) {
+        if (optionalGuest.isPresent()) {
             return ResponseEntity.ok(optionalGuest.get());
         } else {
-          return ResponseEntity.badRequest().body("Guest ID " + id + ", not found");
+            return ResponseEntity.badRequest().body("Guest ID " + id + ", not found");
         }
     }
 }

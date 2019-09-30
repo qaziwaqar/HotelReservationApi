@@ -34,14 +34,14 @@ public class ReservationController {
     // While @RequestParams extract values from the query string, @PathVariables extract values from the URI path:
 
     @GetMapping
-    public List<ReservationDTO> getAllReservedRoomsByDate(@RequestParam(value = "date",required = false) String date) {
+    public List<ReservationDTO> getAllReservedRoomsByDate(@RequestParam(value = "date", required = false) String date) {
         return this.reservationService.getAllReservedRoomsByDate(date);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity getReservedRoomsById(@PathVariable("id") Long id) {
         Optional<ReservationDTO> optionalReservationDTO = this.reservationService.getReservedRoomsById(id);
-        if(optionalReservationDTO.isPresent()) {
+        if (optionalReservationDTO.isPresent()) {
             return ResponseEntity.ok(optionalReservationDTO.get());
         } else {
             return ResponseEntity.badRequest().body("Reserved Room ID " + id + ", not found");
