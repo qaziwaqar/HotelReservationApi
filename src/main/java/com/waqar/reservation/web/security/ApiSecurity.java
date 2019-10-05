@@ -9,7 +9,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.sql.DataSource;
@@ -34,24 +34,20 @@ public class ApiSecurity extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(AuthenticationManagerBuilder authBuilder) throws Exception{
-        authBuilder.jdbcAuthentication()
-    .dataSource(dataSource)
-                .passwordEncoder(encoder())
+        authBuilder
+                .jdbcAuthentication()
+                .dataSource(dataSource)
+                .passwordEncoder(passwordEncoder())
 //                .passwordEncoder(NoOpPasswordEncoder.getInstance())
                 .usersByUsernameQuery(
                 "select username,password,enabled from users where username=?")
                 .authoritiesByUsernameQuery(
                         "select username,role from user_roles where username=?");
-
-//                .withDefaultSchema()
-//                .withUser("user1").password(encoder().encode("user1")).roles("ADMIN").authorities("role_admin")
-//                .and()
-//                .withUser("user1").password(encoder().encode("user1")).roles("USER").authorities("role_user");
     }
 
     @Bean
-    public PasswordEncoder encoder() {
-        return new BCryptPasswordEncoder(10);
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
 }
