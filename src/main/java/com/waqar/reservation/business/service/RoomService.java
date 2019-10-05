@@ -6,6 +6,7 @@ import com.waqar.reservation.data.repositories.GuestRepository;
 import com.waqar.reservation.data.repositories.ReservationRepository;
 import com.waqar.reservation.data.repositories.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -43,7 +44,9 @@ public class RoomService {
         return this.roomRepository.save(room);
     }
 
+    @Cacheable(value = "getRoomById", key = "#id")
     public Optional<Room> getRoomById(Long id) {
+        System.out.println("Param: " + id);
         return this.roomRepository.findById(id);
     }
 }

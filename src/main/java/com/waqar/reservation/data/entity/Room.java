@@ -1,11 +1,12 @@
 package com.waqar.reservation.data.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.StringJoiner;
 
 @Entity
 @Table(name = "room")
-public class Room {
+public class Room implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
